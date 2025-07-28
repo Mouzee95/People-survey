@@ -11,5 +11,4 @@ public interface SurveyResponseService {
     UserDetails getResponseById(Long id);
     UserDetails deleteResponse(Long id);
 
-
 }

@@ -1,7 +1,9 @@
 package com.mouzeecode.People_survey.service;
 
 import com.mouzeecode.People_survey.entity.UserDetails;
+import com.mouzeecode.People_survey.exception.ResourceNotFoundException;
 import com.mouzeecode.People_survey.repo.SurveyRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +34,19 @@ public class SurveyResponseImp implements SurveyResponseService {
     @Override
     public UserDetails getResponseById(Long id) {
         return surveyRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Not found by id: " + id));
+                .orElseThrow(()->new ResourceNotFoundException("Not found by id: " + id));
     }
 
     @Override
+    @Transactional
     public UserDetails deleteResponse(Long id) {
-        surveyRepository.deleteById(id);
-        return deleteResponse(id);
+        UserDetails user = getResponseById(id); // Safely fetch first
+        surveyRepository.deleteById(id);        // Then delete
+        return user;                            // Return deleted user
     }
+
+
+
 
 
 }

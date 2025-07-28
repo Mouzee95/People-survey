@@ -5,6 +5,7 @@ import com.mouzeecode.People_survey.service.SurveyResponseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,23 @@ public class SurveyController {
         return ResponseEntity.ok(surveyResponseService.getResponseById(id));
 
     }
-    @DeleteMapping("/{id}")
-    public  UserDetails deleteById(@PathVariable Long id){
-        return surveyResponseService.deleteResponse(id);
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserDetails> deleteById(@PathVariable Long id) {
+        UserDetails deleted = surveyResponseService.deleteResponse(id);
+        return ResponseEntity.ok(deleted);
     }
+
+//    @GetMapping("/results")
+//    public String showResults(Model model) {
+//        model.addAttribute("total", surveyResponseService.getTotalSurveys());
+//        model.addAttribute("avgAge", surveyResponseService.getAverageAge());
+//        model.addAttribute("oldest", surveyResponseService.getOldestAge());
+//        model.addAttribute("youngest", surveyResponseService.getYoungestAge());
+//        model.addAttribute("pizzaPercent", surveyResponseService.getPizzaPercentage());
+//        model.addAttribute("avgEatOut", surveyResponseService.getAverageEatOutRating());
+//        return "survey_results";
+//    }
+
+
 }
