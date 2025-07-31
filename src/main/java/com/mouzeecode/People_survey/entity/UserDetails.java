@@ -23,6 +23,9 @@ public class UserDetails {
     @NotBlank(message = "Full name is required")
     private String full_name;
 
+    @NotBlank(message = "Email is required")
+    private String email;
+
     @NotNull(message = "Date of birth is required")
     @Past(message = "date of birth can not be current year")
     private LocalDate dob;
